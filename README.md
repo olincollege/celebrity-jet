@@ -1,8 +1,7 @@
-# Python Project Template Repository
+# Celebrity Jet Usage Analyzer
 
-This is a template repository for a Python project. Feel free to use and edit
-this repository (including this file) for your needs. Below, find some
-instructions and tips for using this template repository.
+A python analyzer that looks for correlations between celebrity jet usage, influence
+and carbon impact on the planet. 
 
 ## How to Use
 
