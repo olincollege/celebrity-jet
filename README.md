@@ -3,14 +3,6 @@
 A python analyzer that looks for correlations between celebrity jet usage, influence
 and carbon impact on the planet. 
 
-## How to Use
-
-Click on the "Use this template" button in the top right corner to create a new
-repository based on this template. If this is for a class project, we ask that
-you keep it in the `olincollege` GitHub organization, and that you refrain from
-keeping the repository private. This will ensure that relevant people can access
-your repository for assessment, etc.
-
 ## Requirements
 
 The `requirements.txt` file is blank and should be filled out with any project
