@@ -11,6 +11,9 @@ def get_flighttracking(
     Makes a request to the url site to get all the html on that page and saves
     it to a file as formatted html.
 
+    Note: Calling this too many times will revoke site access and headers need
+    to be changed to simulate different browser.
+
     Args:
         url: A string containing a url to scrape the html from
             Default: https://celebrityprivatejettracker.com/leaderboard/
@@ -81,3 +84,30 @@ def get_individual_data(celeb_chunk):
         A list of strings containing celebrity data
     """
     print(celeb_chunk)
+
+    # co2 = person_soup.find_all("td")[-1].get_text(strip=True).split("m")[0]
+    # print(co2)
+
+
+def get_apininjas_data(celeb_name):
+    """
+    Given a string name of a celebrity returns the api call to apininjas celeb
+    api.
+
+    Args:
+        celeb_name: A string name of a celebrity that data will be collected for
+
+    Returns:
+        Dictionary of information of a given celebrity.
+    """
+    api_url = "https://api.api-ninjas.com/v1/celebrity?name={}".format(
+        celeb_name
+    )
+    response = requests.get(
+        api_url,
+        headers={"X-Api-Key": "5b9xtAz0hGXBV1s6QVFT3w==eDklpigJatPRDfuj"},
+    )
+    if response.status_code == requests.codes.ok:
+        return response
+    else:
+        print("Error:", response.status_code, response.text)
