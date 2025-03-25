@@ -40,7 +40,7 @@ def get_flighttracking(
         file.write(formatted_soup)
 
 
-def get_celeb_chunks(file="Data/data_flighttracker.html"):
+def get_celeb_chunks(file_path="Data/data_flighttracker.html"):
     """
     Gets the html chunk of data containing celebrity information from scraped
     celebrityflighttracker.com/leaderboards html and returns a list of all
@@ -50,11 +50,11 @@ def get_celeb_chunks(file="Data/data_flighttracker.html"):
         file: file path to scraped data.
     """
     elements = None
-    with open("sample_data_flighttracker.html", "r", encoding="utf-8") as file:
+    with open(file_path, "r", encoding="utf-8") as file:
         soup = BeautifulSoup(file, "html.parser")
-        elements = soup.find_all("tr")  # [1] # The first one but can I get all?
-    print(elements)
-    # return elements
+        elements = soup.find_all("tr", class_=("trdark", "trlight"))
+    # print(elements)
+    return elements[:-1]
 
 
 def get_celeb_data(celeb_html):
@@ -70,6 +70,20 @@ def get_celeb_data(celeb_html):
     Returns:
         A list of lists containing celebrity information (see above).
     """
+    name_list = []
+    print(f"length of chunk list is: {len(celeb_html)}")
+    for chunk in celeb_html:
+        name = chunk.find("a", class_="maincolor")  # .text.strip()
+        if name is not None:
+            name_list.append(name)
+        # name = chunk.find("td").text.strip()
+    clean_names = []
+    for i, n in enumerate(name_list):
+        clean_names.append(n.text.strip())
+    return clean_names
+
+
+def remove_duplicate_names(name_list):
     pass
 
 
