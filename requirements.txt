@@ -1,2 +1,4 @@
+beautifulsoup4~=4.13.3
 mwparserfromhell~=0.6.6
+opensky_api.egg~=info
 Requests~=2.32.3
