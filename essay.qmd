@@ -1,0 +1,10 @@
+---
+title: Celebrity Private Jet Data Analysis
+jupyter: python3
+---
+
+### Julian Shah, Yunzhu Chen
+
+
+Beginning of the computational essay for the submission
+
