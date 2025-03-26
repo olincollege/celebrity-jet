@@ -1,7 +1,6 @@
 import requests
 import mwparserfromhell
 
-
 def get_grammy_nominee():
     """
     Get grammy nominee names list from wikipedia
