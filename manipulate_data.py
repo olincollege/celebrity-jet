@@ -1,6 +1,5 @@
-import re
-import requests
-from bs4 import BeautifulSoup
+import requests  # type: ignore
+from bs4 import BeautifulSoup  # type: ignore
 import keys
 
 
@@ -123,9 +122,11 @@ def get_individual_name(celeb_chunk):
     name = celeb_chunk.find("a", class_="maincolor")  # .text.strip()
     if name is None:
         name = celeb_chunk.find("td")
-
+    print(f"uncleaned name is: {name}")
     # clean the name
     clean_name = name.get_text(strip=True)
+    if clean_name.find("\xa0") != -1:
+        clean_name = clean_name.replace("\xa0", " ")
     return clean_name
 
 
@@ -188,7 +189,8 @@ def clean_number(data_list, index):
 def clean_time(data_list):
     """
     Extracts the hours of flight time the celebrity has flown in their private
-    jet as a pure number
+    jet as a pure number and directly inserts that into the mutable dictionary
+    that is passed.
 
     Args: A list of celebrity data
     """
