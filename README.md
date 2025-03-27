@@ -5,20 +5,57 @@ and carbon impact on the planet.
 
 ## Requirements
 
-The `requirements.txt` file is blank and should be filled out with any project
-dependencies. There is a Python package called `pipreqs` that autogenerates the
-contents of the `requirements.txt` file based on the `import` statements in your
-`.py` files. To get this, run
+This project runs in Python 3.1x. Please ensure that you have an appropriate 
+version of python installed.
+
+The requirements.txt file contains all the dependencies to run this project. To
+install all the requirements, we will be using pip. Usually, pip comes preinstalled
+with python. To check that you have pip run:
 
 ```
-pip install pipreqs
+pip --version
+``` 
+
+in BASH shells (MacOS/Linux) or:
+
+```
+python -m pip --version
 ```
 
-Then, in the root of your project repository, run:
+in Windows. On the off chance that you have python and not pip, please follow
+[this guide from the pip documentation](https://pip.pypa.io/en/stable/installation/).
 
+Once you have pip installed you can run
 ```
-pipreqs --mode compat
+pip install -r requirements.txt
+```
+in BASH shells (MaxOS/Linux) or:
+```
+pip install --upgrade -r requirements.txt
 ```
 
-If you already have a `requirements.txt`, the above command will ask you to
-rerun the command with the `--force` flag to overwrite it.
+## API Key
+
+An API key from [api-ninjas.com](https://www.api-ninjas.com/) is required to run this 
+project. You need to create an account to create your own API key. If you do not
+already have an account you can create it [here](https://www.api-ninjas.com/register).
+
+Once you have your account you need to retrieve your key and place it within the 
+keys.py file.
+
+First, retrieve your key by copying it from the [api-ninjas profile page](https://www.api-ninjas.com/profile).
+You will have to click 'Show API Key' to see and copy your key in the profile page.
+
+Next, open the keys.py file and and paste your key in between the quotation marks,
+replacing YOUR API KEY HERE with your key. It should go from this:
+```
+def get_ninja_key():
+    return "YOUR API KEY HERE"
+```
+to something like this:
+```
+def get_ninja_key():
+    return "ABC1234xyz7890-FAKEKEY0987654321"
+```
+
+### You are now ready to run the computation essay
