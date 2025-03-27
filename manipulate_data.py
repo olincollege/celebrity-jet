@@ -74,20 +74,29 @@ def get_celeb_data(celeb_html):
     Returns:
         A list of lists containing celebrity information (see above).
     """
-    name_list = []
+    # STILL NEED TO BREAK THIS INTO SMALLER FUNCTIONS
+    name_list = {}
     for chunk in celeb_html:
         name = chunk.find("a", class_="maincolor")  # .text.strip()
         if name is None:
             name = chunk.find("td")
-            name_list.append(name)
+            name_list[name.text.strip()] = get_data_points(chunk)
         else:
-            name_list.append(name)
+            name_list[name.text.strip()] = get_apininjas_data(chunk)
         # name = chunk.find("td").text.strip()
     clean_names = []
     for i, n in enumerate(name_list):
         clean_names.append(n.text.strip())
 
+    celeb_data = dict.fromkeys(clean_names)
+
     return remove_duplicate_names(clean_names)
+
+
+def get_data_points(chunk):
+    values = chunk.find_all("td")[1::]  # all but first one
+    print(values)
+    return values
 
 
 def remove_duplicate_names(name_list):
