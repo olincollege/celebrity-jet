@@ -3,8 +3,116 @@ title: Celebrity Private Jet Data Analysis
 jupyter: python3
 ---
 
+
 ### Julian Shah, Yunzhu Chen
 
 
-Beginning of the computational essay for the submission
+## Introduction
+(In the introduction, you should aim to tell the reader what your project
+is about. In doing so, you should answer the following questions:
+
+What is the question you are trying to answer or the story that you are
+trying you tell? Why is this question or story important? What were the
+main steps your project made towards answering the question or telling
+the story? Beyond answering these questions, you are free to structure
+this section however you wish.)
+
+### Research Question and Background
+
+
+### Overview of the Project
+
+
+### Setup Instructions
+
+## Methodology 
+(In the methodology, you should explain how you obtained,
+processed, and summarized or visualized the data. In doing so, you
+should answer the following questions:
+
+Where did you get your data from? How did you get this data (i.e., did
+you programmatically download it or did you access it through an API)?
+How did you store and/or process this data (e.g., did you store and
+process it in Pandas)? What information did you get from this data that
+you used in the presentation of your results?) 
+
+### Data Collection and Processing
+Here is all the data we got and used in this project.
+
+__1) Celebrity Jet Usage__
+**Source:** Celebrity Jet Tracker Website (https://celebrityprivatejettracker.com/)
+**Method:** Scrap/html ...?
+**Process & Storage:**
+**Usage:**
+
+__2) Celebrity Age and Occupation__
+**Source:** Wikipedia
+**Method:** We got it directly from the Wikipedia website with several libraries, including requests, wptools and mwparserfromhell.
+**Process & Storage:**
+**Usage:**
+
+__3) Celebrity Net Worth__
+**Source:** API Ninjas website
+**Method:** 
+**Process & Storage:**
+**Usage:**
+
+__4) Oscar & Grammy Nominees__
+**Source:** Wikipedia
+**Method:** We got it directly from the Wikipedia website with several libraries, including requests, wptools and mwparserfromhell.
+**Process & Storage:**
+**Usage:**
+
+### Data Analysis and Visualization
+
+How do we relate the data and use them
+
+
+## Results 
+(In the results,
+you should show the main summaries or visualizations of your data, along
+with any accompanying information. In doing so, you should answer the
+following questions:
+
+What summaries or visualizations did you create? What are the
+interesting and/or important parts of these summaries or visualizations?
+How do these results answer your questions or tell your story?)
+
+### Visualizations
+
+- Pie chart of jet miles each owner
+- ??(some kind of graph) of carbon emissions rank of people who own more than one jet
+- Histogram of carbon emiisions by age
+- Histogram of carbon emissions by net worth
+
+potentially:
+- Pie chart of carbon emiisions by occupation
+- Carbon emission among musicians (grammy nominees vs others)
+- Carbon emission among actors (oscar nominees vs others)
+
+### Summaries and Interpretation
+
+
+## Conclusion 
+(In the conclusion, you should provide key takeaways for
+the reader. In doing so, you should answer the following questions,
+where applicable:
+
+What are the important insights that the reader should get from this
+project? What are the ethical considerations surrounding the data
+sourcing? What are the contextual or ethical implications of your topic
+or work? What lessons did you learn as you did the project? What were
+the most difficult, challenging, or frustrating parts of the project? In
+what ways would you extend or change your project if you had more time?)
+
+### Key Takeaways
+
+
+### Ethical Considerations
+
+
+### Challenges and Restrictions
+
+
+### Future Work
 
