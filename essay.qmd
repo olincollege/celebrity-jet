@@ -7,6 +7,7 @@ jupyter: python3
 ### Julian Shah, Yunzhu Chen
 
 
+
 ## Introduction
 (In the introduction, you should aim to tell the reader what your project
 is about. In doing so, you should answer the following questions:
@@ -24,6 +25,7 @@ this section however you wish.)
 
 
 ### Setup Instructions
+
 
 ## Methodology 
 (In the methodology, you should explain how you obtained,
@@ -68,6 +70,7 @@ __4) Oscar & Grammy Nominees__
 How do we relate the data and use them
 
 
+
 ## Results 
 (In the results,
 you should show the main summaries or visualizations of your data, along
@@ -91,6 +94,7 @@ potentially:
 - Carbon emission among actors (oscar nominees vs others)
 
 ### Summaries and Interpretation
+
 
 
 ## Conclusion 
