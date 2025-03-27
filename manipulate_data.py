@@ -1,5 +1,8 @@
 import requests  # type: ignore
 from bs4 import BeautifulSoup  # type: ignore
+import wptools
+import json
+import celebrity_info_scrap as scrap
 import keys
 
 
@@ -234,3 +237,112 @@ def clean_time(data_list):
 
     in_hours = (days * 24) + hours + (minutes / 60)
     data_list[index] = in_hours
+
+
+# Fix names got from jet usage website so that we can search it on wikipedia
+def fix_names(clean_name):
+    """
+    Remove duplicate names and correct spelling mistakes
+
+    Args:
+    Name_list: a dictionary whose keys are jet owners' names with repetitions and mistakes
+
+    Returns:
+    A cleaned list of names ready for wikipedia search
+    """
+    fix_name = []
+    correction_list = {
+        "Alex Rodriquez": "Alex Rodriguez",
+        "Dr. Phil": "Phil McGraw",
+        "Drake": "Drake (musician)",
+        "Judge Judy": "Judy Sheindlin",
+        "Jay Z": "Jay-Z",
+        "Google": None,
+        "Caesars Palace Casino": None,
+        "Nike Corporation": None,
+        "Under Armour Corporation": None,
+        "Playboy Corporation": None,
+    }
+    for name in clean_name:
+        separate_name = name.split(" (")[0]
+        if separate_name in correction_list:
+            separate_name = correction_list[separate_name]
+        if separate_name and separate_name not in fix_name:
+            fix_name.append(separate_name)
+    return fix_name
+
+
+def get_celeb_info_wapi(fix_name):
+    """
+    Access data from apininjas for each celebrity and write them into a json file
+
+    Args:
+    fix_name: a fixed list of jet owners names
+    """
+    with open("Data/raw_api_data.json", "w") as f:
+        for name in fix_name:
+            try:
+                response = get_apininjas_data(name)
+                if not response:
+                    json.dump([], f)
+                else:
+                    json.dump(response, f)
+                f.write("\n")
+            except Exception:
+                pass
+
+
+def get_jet_owner_info(fix_name):
+    """
+    Process and organize celebrity data into a json file
+
+    Args:
+    fix_name: a fixed list of jet owners names
+    """
+    with open("Data/jet_owners_info.json", "w") as f:
+        for name in fix_name:
+            # Get and parse the infobox, if applicable
+            try:
+                content = wptools.page(name).get_parse()
+                infobox = content.data["infobox"]
+            except LookupError:
+                continue
+
+            # Get their occupations and categorize them
+            try:
+                occupations = scrap.get_occupations(infobox)
+            except AttributeError:
+                occupations = None
+            category = scrap.decide_occupation(name, occupations)
+
+            # Get their age
+            try:
+                age = scrap.get_age(infobox)
+            except AttributeError:
+                age = None
+
+            # Get their net worth
+            try:
+                net_worth = scrap.get_net_worth()
+            except AttributeError:
+                net_worth = None
+
+            f.write(json.dumps([name, category, age, net_worth]) + "\n")
+
+
+def create_dict(json_file_path):
+    """
+    Converts jet owner info from json to a dictionary
+
+    Args:
+    json_file_path: the file path of the json doc that stores original info
+
+    Returns:
+    A dictionary with each celebrity's name as keys and their information as values
+    """
+    info_dict = {}
+    with open(json_file_path, "r") as f:
+        for line in f:
+            data = json.loads(line.strip())
+            info_dict[data[0]] = [data[1], data[2], data[3]]
+    return info_dict
