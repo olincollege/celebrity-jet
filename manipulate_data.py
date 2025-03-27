@@ -1,6 +1,6 @@
+import re
 import requests
 from bs4 import BeautifulSoup
-from opensky_api import OpenSkyApi  # pylint:disable=E401
 import keys
 
 
@@ -48,11 +48,15 @@ def get_celeb_chunks(file_path="Data/data_flighttracker.html"):
 
     Args:
         file: file path to scraped data.
+
+    Return:
+        chunks of html soups that contain the celebrity flight information
     """
     elements = None
     with open(file_path, "r", encoding="utf-8") as file:
         soup = BeautifulSoup(file, "html.parser")
-        elements = soup.find_all("tr", class_=("trdark", "trlight"))
+        elements = soup.find_all("tr", class_="trlight")
+
     # print(elements)
     return elements[:-1]
 
@@ -71,20 +75,24 @@ def get_celeb_data(celeb_html):
         A list of lists containing celebrity information (see above).
     """
     name_list = []
-    print(f"length of chunk list is: {len(celeb_html)}")
     for chunk in celeb_html:
         name = chunk.find("a", class_="maincolor")  # .text.strip()
-        if name is not None:
+        if name is None:
+            name = chunk.find("td")
+            name_list.append(name)
+        else:
             name_list.append(name)
         # name = chunk.find("td").text.strip()
     clean_names = []
     for i, n in enumerate(name_list):
         clean_names.append(n.text.strip())
-    return clean_names
+
+    return remove_duplicate_names(clean_names)
 
 
 def remove_duplicate_names(name_list):
-    pass
+    unique_names = list(dict.fromkeys(name_list))
+    return unique_names
 
 
 def get_individual_data(celeb_chunk):
