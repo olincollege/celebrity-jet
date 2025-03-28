@@ -40,6 +40,13 @@ An API key from [api-ninjas.com](https://www.api-ninjas.com/) is required to run
 project. You need to create an account to create your own API key. If you do not
 already have an account you can create it [here](https://www.api-ninjas.com/register).
 
+NOTE: The api key from api-ninjas has a max calls of 10000 per month. This essay uses
+~70 every time it runs so consider changing 
+```
+GATHER_API_DATA = False
+```
+in order to stop calling the api after you've run it the first time.
+
 Once you have your account you need to retrieve your key and place it within the 
 keys.py file.
 
@@ -58,4 +65,4 @@ def get_ninja_key():
     return "ABC1234xyz7890-FAKEKEY0987654321"
 ```
 
-### You are now ready to run the computation essay
+### You are now ready to run the computational essay

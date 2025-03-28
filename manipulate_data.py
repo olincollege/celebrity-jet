@@ -1,7 +1,7 @@
+import json
 import requests  # type: ignore
 from bs4 import BeautifulSoup  # type: ignore
 import wptools
-import json
 import celebrity_info_scrap as scrap
 import keys
 
@@ -125,12 +125,40 @@ def get_individual_name(celeb_chunk):
     name = celeb_chunk.find("a", class_="maincolor")  # .text.strip()
     if name is None:
         name = celeb_chunk.find("td")
-    print(f"uncleaned name is: {name}")
     # clean the name
     clean_name = name.get_text(strip=True)
     if clean_name.find("\xa0") != -1:
         clean_name = clean_name.replace("\xa0", " ")
+    clean_name = fix_names(clean_name)
     return clean_name
+
+
+# Fix names got from jet usage website so that we can search it on wikipedia
+def fix_names(name):
+    """
+    Remove duplicate names and correct spelling mistakes
+
+    Args:
+    name: a dictionary whose keys are jet owners' names with repetitions and mistakes
+
+    Returns:
+    A cleaned list of names ready for wikipedia search
+    """
+    correction_list = {
+        "Alex Rodriquez": "Alex Rodriguez",
+        "Dr. Phil": "Phil McGraw",
+        "Drake": "Drake (musician)",
+        "Judge Judy": "Judy Sheindlin",
+        "Jay Z": "Jay-Z",
+        "Google": None,
+        "Caesars Palace Casino": None,
+        "Nike Corporation": None,
+        "Under Armour Corporation": None,
+        "Playboy Corporation": None,
+    }
+    if name in correction_list:
+        return correction_list[name]
+    return name
 
 
 def get_individual_data(celeb_chunk):
@@ -146,13 +174,13 @@ def get_individual_data(celeb_chunk):
     """
     # find the data attached to the name
     data_points = celeb_chunk.find_all("td")[1::]
-    clean_data = []
+    clean_data_val = []
     for n in data_points:
         if n.find("a") is not None:
-            clean_data.append(str(n.find("a").get_text(strip=True)))
+            clean_data_val.append(str(n.find("a").get_text(strip=True)))
         else:
-            clean_data.append(str(n.get_text(strip=True)))
-    return clean_data
+            clean_data_val.append(str(n.get_text(strip=True)))
+    return clean_data_val
 
 
 def clean_all_data(data_dict):
@@ -237,39 +265,6 @@ def clean_time(data_list):
 
     in_hours = (days * 24) + hours + (minutes / 60)
     data_list[index] = in_hours
-
-
-# Fix names got from jet usage website so that we can search it on wikipedia
-def fix_names(clean_name):
-    """
-    Remove duplicate names and correct spelling mistakes
-
-    Args:
-    Name_list: a dictionary whose keys are jet owners' names with repetitions and mistakes
-
-    Returns:
-    A cleaned list of names ready for wikipedia search
-    """
-    fix_name = []
-    correction_list = {
-        "Alex Rodriquez": "Alex Rodriguez",
-        "Dr. Phil": "Phil McGraw",
-        "Drake": "Drake (musician)",
-        "Judge Judy": "Judy Sheindlin",
-        "Jay Z": "Jay-Z",
-        "Google": None,
-        "Caesars Palace Casino": None,
-        "Nike Corporation": None,
-        "Under Armour Corporation": None,
-        "Playboy Corporation": None,
-    }
-    for name in clean_name:
-        separate_name = name.split(" (")[0]
-        if separate_name in correction_list:
-            separate_name = correction_list[separate_name]
-        if separate_name and separate_name not in fix_name:
-            fix_name.append(separate_name)
-    return fix_name
 
 
 def get_celeb_info_wapi(fix_name):
