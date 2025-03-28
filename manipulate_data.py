@@ -290,24 +290,30 @@ def combine_duplicates(celeb_dict):
 
     Returns:
         A dictionary where all of a celebrity's flight data is assigned
-        under their name, not under their jets
+        under their name, not under their jets. "Celeb Name": [5x1 Floats]
     """
-    pass
-    # combined_dict = {}
-    # for name, data in celeb_dict.items:
-    #     just_name = name
-    #     if name.find("(") != -1:
-    #         index = name.find("(")
-    #         just_name = name[:: (index - 1)]
+    combined_dict = {}
+    for name, data in celeb_dict.items():
+        match = False
+        just_name = name
+        if name is None:
+            continue
+        if name.find("(") != -1:
+            index = name.find("(") - 1
+            just_name = name[:index]
 
-    #     for c_dict_name, _ in combined_dict.items():
-    #         if just_name.find(c_dict_name) != -1:
-    #             for i in range(len(combined_dict[c_dict_name])):
-    #                 combined_dict[c_dict_name][i] = float(
-    #                     combined_dict[c_dict_name][i]
-    #                 ) + float(data[i + 2])
+        # check if there is a match
+        for c_dict_name, _ in combined_dict.items():
+            if just_name.find(c_dict_name) != -1:
+                match = True
+                for i in range(len(combined_dict[c_dict_name])):
+                    combined_dict[c_dict_name][i] = float(
+                        combined_dict[c_dict_name][i]
+                    ) + float(data[i + 2])
+        if match == False:
+            combined_dict[just_name] = data[2::]
 
-    #             continue
+    return combined_dict
 
 
 def get_celeb_info_wapi(data_dict):

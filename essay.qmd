@@ -125,6 +125,26 @@ matplotlib, which we use for visualizations, to work.
 #### You are now ready to begin your journey!
 
 ## Methodology, Data Collection, & Processing
+
+Here is all the data we got and used in this project.
+
+**1) Celebrity Jet Usage** **Source:** Celebrity Jet Tracker Website
+(https://celebrityprivatejettracker.com/) **Method:** Scrap/html …?
+**Process & Storage:** **Usage:**
+
+**2) Celebrity Age and Occupation** **Source:** Wikipedia **Method:** We
+got it directly from the Wikipedia website with several libraries,
+including requests, wptools and mwparserfromhell. **Process & Storage:**
+**Usage:**
+
+**3) Celebrity Net Worth** **Source:** API Ninjas website **Method:**
+**Process & Storage:** **Usage:**
+
+**4) Oscar & Grammy Nominees** **Source:** Wikipedia **Method:** We got
+it directly from the Wikipedia website with several libraries, including
+requests, wptools and mwparserfromhell. **Process & Storage:**
+**Usage:**
+
 ### Jet Data
 
 This project is structured around data retrieved from 
@@ -208,6 +228,20 @@ set equal to a return value
 manipulate_data.clean_all_data(celebrity_data)
 ```
 
+The final function we're going to run is a function that combines duplicates.
+Many of the celebrities here are soooo wealthy that they own, or have owned,
+multiple jets in their lifetime. In this case, we need to synchronise their
+data using:
+```
+combine_duplicates(celebrity_data)
+```
+
+```{python}
+accountable_data = manipulate_data.combine_duplicates(celebrity_data)
+```
+
+Yay! You've now got nicely formatted data to do some visualisations.
+
 ### API Ninjas Data
 
 After all that work, you may be asking 'what about that API key you **made**
@@ -233,26 +267,6 @@ How did you store and/or process this data (e.g., did you store and
 process it in Pandas)? What information did you get from this data that
 you used in the presentation of your results?)
 
-### Data Collection and Processing
-
-Here is all the data we got and used in this project.
-
-**1) Celebrity Jet Usage** **Source:** Celebrity Jet Tracker Website
-(https://celebrityprivatejettracker.com/) **Method:** Scrap/html …?
-**Process & Storage:** **Usage:**
-
-**2) Celebrity Age and Occupation** **Source:** Wikipedia **Method:** We
-got it directly from the Wikipedia website with several libraries,
-including requests, wptools and mwparserfromhell. **Process & Storage:**
-**Usage:**
-
-**3) Celebrity Net Worth** **Source:** API Ninjas website **Method:**
-**Process & Storage:** **Usage:**
-
-**4) Oscar & Grammy Nominees** **Source:** Wikipedia **Method:** We got
-it directly from the Wikipedia website with several libraries, including
-requests, wptools and mwparserfromhell. **Process & Storage:**
-**Usage:**
 
 ### Data Analysis and Visualization
 
@@ -296,9 +310,31 @@ what ways would you extend or change your project if you had more time?)
 
 ### Key Takeaways
 
+
+
 ### Ethical Considerations
+
+Now, we are scraping. Scraping can be used in bad ways because it could 
+take someone's free resource and be used for personal gain. In this case
+however there is little personal gain (no fiscal output is retrieved
+from this project)
 
 ### Challenges and Restrictions
 
+Now, this list is a good general baseline but may not be super accurate.
+For one, the data from api-ninjas is not from a clear source and cannot
+be perfectly verified. For another, those super rich that really don't 
+want their flights tracked can simple rent different private jets and 
+switch often.
+
 ### Future Work
+
+This project should expand at the same pace that celebrities are added to
+the celebrityjettracker.com leaderboard. Since we are so heavily reliant
+on it this project cannot be easily expanded. 
+
+However, there are some avenues. For example, a deeper look into the data
+could provide even more insights that we were able to find. One thing we
+didn't look at is educational level. This project could be expanded in 
+many ways and we are totally happy if you do so!
 
