@@ -310,7 +310,7 @@ def combine_duplicates(celeb_dict):
     #             continue
 
 
-def get_celeb_info_wapi(fix_name):
+def get_celeb_info_wapi(data_dict):
     """
     Access data from apininjas for each celebrity and write them into a json file
 
