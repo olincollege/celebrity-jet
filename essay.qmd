@@ -120,6 +120,8 @@ matplotlib, which we use for visualizations, to work.
 
 ```{python}
 %matplotlib inline 
+%load_ext autoreload
+%autoreload 2
 ```
 
 #### You are now ready to begin your journey!
@@ -253,10 +255,6 @@ doing some simple cross referencing (make api call for net worth and compare
 result to sites like Forbes.com net worth ranking) to determine this data
 is accurate **enough** for fueling your rage (or not, we'll see).
 
-This is actually
-
-
-
 (In the methodology, you should explain how you obtained, processed, and
 summarized or visualized the data. In doing so, you should answer the
 following questions:
@@ -284,39 +282,70 @@ How do these results answer your questions or tell your story?)
 
 ### Visualizations
 
--   Pie chart of jet miles each owner
--   ??(some kind of graph) of carbon emissions rank of people who own
-    more than one jet
--   Histogram of carbon emiisions by age
--   Histogram of carbon emissions by net worth
+Ok, here we go, lets make some visualisations. First lets import the 
+visualizations file. This might take upwards of 60 seconds because
+we are accessing wikipedia for each of our celebrities. Please be
+patient, your rage should peter at this stage.
 
-potentially: - Pie chart of carbon emiisions by occupation - Carbon
-emission among musicians (grammy nominees vs others) - Carbon emission
-among actors (oscar nominees vs others)
+```{python}
+manipulate_data.get_celeb_info_wapi(accountable_data)
+manipulate_data.get_jet_owner_info(accountable_data)
+import visualization
+```
+
+Now lets plot our plots. After each one we're going to include a caption
+to help you understand what you're looking at.
+
+```{python}
+name_list = list(accountable_data.keys())
+jet_miles = []
+for _, value in accountable_data.items():
+    jet_miles.append(value[0])
+visualization.plot_jet_miles_distribution(name_list, jet_miles)
+```
+
+Here we have a lovely, if a bit unreadable, pie chart with the breakdown of miles flown per celebrity. 
+Notice that Bill Gates has by far the largest portion of the pie followed by Eric Scmidt. Bill Gates
+has publicly stated that it is okay for him to fly in his private jet because he donates so much of 
+his money to the climate.
+
+```{python}
+visualization.plot_emissions_by_occupation()
+```
+
+Here we see the average CO2 emissions by occupation. Music takes the largest lead in this department,
+followed by TV & Media.
+
+```{python}
+visualization.plot_emissions_by_age()
+```
+
+Here we see that the Below 40 agegroup is by far the largest pollutor with private jets. Considering
+that monumental sums of wealth are often possessed by the older class this is very interesting.
+
 
 ### Summaries and Interpretation
-
 ## Conclusion
 
-(In the conclusion, you should provide key takeaways for the reader. In
-doing so, you should answer the following questions, where applicable:
-
-What are the important insights that the reader should get from this
-project? What are the ethical considerations surrounding the data
-sourcing? What are the contextual or ethical implications of your topic
-or work? What lessons did you learn as you did the project? What were
-the most difficult, challenging, or frustrating parts of the project? In
-what ways would you extend or change your project if you had more time?)
+Our main conclusions for private jets are:
+* Bill Gates is the largest individual pollutor
+* Music is the most pollutant industry
+* The below 40 years old age group is the largest pollutor
 
 ### Key Takeaways
 
-
+Considering that the average car emits around 4.6 metric tons of CO2 anually,
+the average individual in the below 40 age group is over 1200 times more 
+pollutant than your average car owner just from their private jet. Even the
+lowest age group, ages 60-69 is over 400 times more pollutant than your average
+car owner.
 
 ### Ethical Considerations
 
-Now, we are scraping. Scraping can be used in bad ways because it could 
-take someone's free resource and be used for personal gain. In this case
-however there is little personal gain (no fiscal output is retrieved
+Now, we *are* scraping. Scraping can be used in ways that maximize personal
+gain while sacrificing open source project websites like celebrityjettracker.com.
+In this case, however, there is no fiscal or exploitive benefit we are gaining
+by using celebrityjettracker. there is little personal gain (no fiscal output is retrieved
 from this project)
 
 ### Challenges and Restrictions
@@ -325,7 +354,9 @@ Now, this list is a good general baseline but may not be super accurate.
 For one, the data from api-ninjas is not from a clear source and cannot
 be perfectly verified. For another, those super rich that really don't 
 want their flights tracked can simple rent different private jets and 
-switch often.
+switch often. An example of such a scenario is Billionaire Bernard Arnault,
+owner of LMVH. For this reason, we have no data on him despite him using
+private jets often. 
 
 ### Future Work
 
