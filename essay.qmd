@@ -8,6 +8,16 @@ jupyter: python3
 
 ## Introduction
 
+This essay aims to see patterns in 'kind' of celebrity using a private
+jet and their carbon foot print from their private jets. Many celebrities
+have the means to travel extremely far, extremely fast because they can
+afford to buy a private jet. However, we wanted to quantify the exact
+impact to the environment this luxury creates and which kind (eg. actors,
+businessnessmen, YUNZHU PLEASE FINISH ALL CATAGORIES) is the largest offendor
+of private jet carbon emissions.
+
+We used celebrities found on the leaderboard of [celebrityprivatejettracker.com](https://celebrityprivatejettracker.com/)
+
 (In the introduction, you should aim to tell the reader what your
 project is about. In doing so, you should answer the following
 questions:
@@ -35,7 +45,9 @@ this section however you wish.)
 ## Methodology
 
 This project is structured around data retrieved from 
-[celebrityprivatejettracker.com](https://celebrityprivatejettracker.com/leadeerboard)
+[celebrityprivatejettracker.com](https://celebrityprivatejettracker.com/leadeerboard).
+The leaderboard contains 63 celebrities (as of 03/27/2025) which we scrape
+from the site usinng python
 
 
 (In the methodology, you should explain how you obtained, processed, and
