@@ -54,8 +54,8 @@ exercise
 
 This project runs in Python 3.1x. Please ensure that you have an
 appropriate version of python installed and kernel selected (in VSCode
-you can choose your kernel in the top right where it says "select
-kernel").
+you can choose your kernel in the top right where it says “select
+kernel”).
 
 The requirements.txt file contains all the dependencies to run this
 project. To install all the requirements, we will be using pip. Usually,
@@ -126,8 +126,8 @@ matplotlib, which we use for visualizations, to work.
 
 ## Methodology, Data Collection, & Processing
 
-Here is an introduction of all the data we got, how did we get them, and how did we process them.
-
+Here is an introduction of all the data we got, how did we get them, and
+how did we process them.
 
 ### Jet Data
 
@@ -237,7 +237,14 @@ for net worth and compare result to sites like Forbes.com net worth
 ranking) to determine this data is accurate **enough** for fueling your
 rage (or not, we’ll see).
 
-The next function will make an API call from the website, and write the raw data into a file called "raw_api_info.csv" in the Data folder. With this file, you will have everything we need from the website stored locally, so that you won't need to request the data again every time you want to get the data. It is suggested to only run this function once, so that you don't waste your limited times of API call (although you have 10k calls per month, which is far more than enough for this project, so feel free to run it multiple times anyways).
+The next function will make an API call from the website, and write the
+raw data into a file called “raw_api_info.csv” in the Data folder. With
+this file, you will have everything we need from the website stored
+locally, so that you won’t need to request the data again every time you
+want to get the data. It is suggested to only run this function once, so
+that you don’t waste your limited times of API call (although you have
+10k calls per month, which is far more than enough for this project, so
+feel free to run it multiple times anyways).
 
     get_celeb_data(celebrity_data_chunks)
 
@@ -245,56 +252,71 @@ The next function will make an API call from the website, and write the raw data
 manipulate_data.get_celeb_info_wapi(accountable_data)
 ```
 
-The data is stored in strings due to the unusability of the json file from the website. In the file "celebrity_info_scrap.py", we'll extract the useful parts from it and convert them to more usable dictionaries with the function:
+The data is stored in strings due to the unusability of the json file
+from the website. In the file “celebrity_info_scrap.py”, we’ll extract
+the useful parts from it and convert them to more usable dictionaries
+with the function:
 
     get_net_worth()
 
-
-
 ### Wikipedia Data
-Now with all the necessary information, let's get some more information of each celebrity from our trusted source Wikipedia.  
 
-In "celebrity_info_scrap.py", you'll see the following two functions:
+Now with all the necessary information, let’s get some more information
+of each celebrity from our trusted source Wikipedia.
+
+In “celebrity_info_scrap.py”, you’ll see the following two functions:
 
     get_occupations(), get_age()
-which access the infobox of the given celebrity and get us their occupation(s) and age from it. For categorization, the function:
-    
+
+which access the infobox of the given celebrity and get us their
+occupation(s) and age from it. For categorization, the function:
+
     decide_occupation()
-will devide the celebrities into five categories:   
-- Business & Politics
-- Music
-- Movie
-- TV & Media
-- Sports  
 
-For more detailed information about the critera, check the variable called *categories* in this function.
+will devide the celebrities into five categories:  
+- Business & Politics   
+- Music   
+- Movie   
+- TV & Media   
+- Sports
 
+For more detailed information about the critera, check the variable
+called *categories* in this function.
 
 ## Final processing and organization
-Once the "celebrity_info_scrap.py" script has gathered all the data, we can organize it and write it to a JSON file, making it more accessible and easier to visualize. The following function handles this process for you in one step:
-    
+
+Once the “celebrity_info_scrap.py” script has gathered all the data, we
+can organize it and write it to a JSON file, making it more accessible
+and easier to visualize. The following function handles this process for
+you in one step:
+
     get_jet_owner_info()
 
-This might take upwards of 60 seconds because we
-are accessing wikipedia for each of our celebrities. Please be patient,
-your rage should peter at this stage.
+This might take upwards of 60 seconds because we are accessing wikipedia
+for each of our celebrities. Please be patient, your rage should peter
+at this stage.
 
 ```{python}
 manipulate_data.get_jet_owner_info(accountable_data)
 ```
 
-It writes all the information we care about into "Data/jet_owners_info.json", where each line contains a list with the celebrity's name, occupation, age, and net worth (if available). While this format may not be the most convenient for immediate use, the function:
-    
-    create_dict()
-converts the data into a dictionary format, making it even easier to use for visualization.
+It writes all the information we care about into
+“Data/jet_owners_info.json”, where each line contains a list with the
+celebrity’s name, occupation, age, and net worth (if available). While
+this format may not be the most convenient for immediate use, the
+function:
 
+    create_dict()
+
+converts the data into a dictionary format, making it even easier to use
+for visualization.
 
 ## Results
 
 ### Visualizations
 
 Ok, here we go, lets make some visualisations. First lets import the
-visualizations file. 
+visualizations file.
 
 ```{python}
 import visualization
@@ -313,45 +335,62 @@ visualization.plot_jet_miles_distribution(name_list, jet_miles)
 
 Here we have a lovely, if a bit unreadable, pie chart with the breakdown
 of miles flown per celebrity. Notice that Bill Gates has by far the
-largest portion of the pie followed by Michael Bloomberg and Eric Scmidt. Bill Gates has
-publicly stated that it is okay for him to fly in his private jet
-because he donates so much of his money to the climate.
+largest portion of the pie followed by Michael Bloomberg and Eric
+Scmidt. Bill Gates has publicly stated that it is okay for him to fly in
+his private jet because he donates so much of his money to the climate.
 
 ```{python}
 visualization.plot_emissions_by_occupation()
 ```
 
 Here we see the average CO2 emissions by occupation. Music takes the
-largest lead in this department, followed by TV & Media and Business & Politics.
+largest lead in this department, followed by TV & Media and Business &
+Politics.
 
 ```{python}
 visualization.plot_emissions_by_age()
 ```
 
 Here we see that the Below 40 agegroup is by far the largest pollutor
-with private jets, with emissions seeming to decrease as age increases. Considering that monumental sums of wealth are often
-possessed by the older class this is very interesting.
+with private jets, with emissions seeming to decrease as age increases.
+Considering that monumental sums of wealth are often possessed by the
+older class this is very interesting.
 
 ```{python}
 visualization.plot_emissions_by_net_worth()
 ```
 
-Interestingly, a similar pattern emerges for the net worth groups, where the less wealthy individuals (Below 100M) contribute the most pollution. This could be due to the smaller sample size in this group, where outliers have a fairly large impact on the average. Excluding this, the remaining data shows a upward trend, indicating that the wealthiest billionaires (Above 10B) are more responsible for carbon emissions.
+We could find that the least wealthy individuals (Below 100M) contribute the most pollution.
+This could be due to the smaller sample size in this group, where
+outliers have a fairly large impact on the average. Excluding this, the
+remaining data shows a upward trend, indicating that the wealthiest
+billionaires (Above 10B) are more responsible for carbon emissions.
 
 ### Summaries and Interpretation
-The analysis of CO2 emissions from private jet usage reveals some notable patterns. 
-Among occupations, the music industry leads in emissions, followed by TV & Media and Business & Politics. This could mean that these kind of celebrities have a more frequent need of air travel.
-In terms of age groups, the Below 40 age group emerges as the largest contributor to pollution from private jet use, with emissions gradually decreasing as age increases. It's probably because younger people's active careers and lifestyle, with more frequent travel for work and leisure.
-For net worth, individuals with a net worth below 100 million are the most significant polluters, while the rest of the data shows an upward trend. Generally, it indicates that wealthier individuals are more responsible for carbon emissions.
 
+The analysis of CO2 emissions from private jet usage reveals some
+notable patterns. Among occupations, the music industry leads in
+emissions, followed by TV & Media and Business & Politics. This could
+mean that these kind of celebrities have a more frequent need of air
+travel. In terms of age groups, the Below 40 age group emerges as the
+largest contributor to pollution from private jet use, with emissions
+gradually decreasing as age increases. It’s probably because younger
+people’s active careers and lifestyle, with more frequent travel for
+work and leisure. For net worth, individuals with a net worth below 100
+million are the most significant polluters, while the rest of the data
+shows an upward trend. Generally, it indicates that wealthier
+individuals are more responsible for carbon emissions.
 
 ## Conclusion
 
 Our main conclusions for private jets are:  
-- Bill Gates is the largest individual polluter
-- Music is the most pollutive industry
-- The below 40 years old age group is the largest polluter
-- Carbon emissions are positively correlated with net worth in general
+- Bill Gates is the largest individual polluter   
+- Music is the most
+pollutive industry   
+- The below 40 years old age group is the largest
+polluter   
+- Carbon emissions are positively correlated with net worth in
+general
 
 ### Key Takeaways
 
@@ -373,11 +412,12 @@ little personal gain (no fiscal output is retrieved from this project)
 
 Now, this list is a good general baseline but may not be super accurate.
 For one, the data from api-ninjas is not from a clear source and cannot
-be perfectly verified. For another, the small size of the dataset might lead to skewed average result due to extreme outliers. Additionally, those super rich that really don’t
-want their flights tracked can simple rent different private jets and
-switch often. An example of such a scenario is Billionaire Bernard
-Arnault, owner of LMVH. For this reason, we have no data on him despite
-him using private jets often. 
+be perfectly verified. For another, the small size of the dataset might
+lead to skewed average result due to extreme outliers. Additionally,
+those super rich that really don’t want their flights tracked can simple
+rent different private jets and switch often. An example of such a
+scenario is Billionaire Bernard Arnault, owner of LMVH. For this reason,
+we have no data on him despite him using private jets often.
 
 ### Future Work
 

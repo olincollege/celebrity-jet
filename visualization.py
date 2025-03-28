@@ -34,10 +34,19 @@ def plot_emissions_by_occupation():
         celeb_info, jet_info
     )
     plt.figure(figsize=(10, 6))
-    plt.bar(occupations, emissions, color="skyblue")
+    bars = plt.bar(occupations, emissions, color="skyblue")
     plt.title("Average CO2 Emissions by Occupation")
     plt.xlabel("Occupation")
     plt.ylabel("Average CO2 Emissions (metric tons)")
+    for bar in bars:
+        yval = bar.get_height()
+        plt.text(
+            bar.get_x() + bar.get_width() / 2,
+            yval + 0.1,
+            round(yval, 2),
+            ha="center",
+            va="bottom",
+        )
     plt.show()
 
 
@@ -46,10 +55,19 @@ def plot_emissions_by_age():
     """Plots a histogram showing the distribution of carbon emissions across different age groups."""
     age_group_list, emissions = prep.get_all_age_emissions(celeb_info, jet_info)
     plt.figure(figsize=(10, 6))
-    plt.bar(age_group_list, emissions, color="orchid")
+    bars = plt.bar(age_group_list, emissions, color="orchid")
     plt.title("Average CO2 Emissions by Age Group")
     plt.xlabel("Age Group")
     plt.ylabel("Average CO2 Emissions (metric tons)")
+    for bar in bars:
+        yval = bar.get_height()
+        plt.text(
+            bar.get_x() + bar.get_width() / 2,
+            yval + 0.1,
+            round(yval, 2),
+            ha="center",
+            va="bottom",
+        )
     plt.show()
 
 
@@ -60,8 +78,17 @@ def plot_emissions_by_net_worth():
         celeb_info, jet_info
     )
     plt.figure(figsize=(10, 6))
-    plt.bar(net_worth_group_list, emissions, color="gold")
+    bars = plt.bar(net_worth_group_list, emissions, color="gold")
     plt.title("Average CO2 Emissions by Net Worth")
     plt.xlabel("Net Worth Group")
     plt.ylabel("Average CO2 Emissions (metric tons)")
+    for bar in bars:
+        yval = bar.get_height()
+        plt.text(
+            bar.get_x() + bar.get_width() / 2,
+            yval + 0.1,
+            round(yval, 2),
+            ha="center",
+            va="bottom",
+        )
     plt.show()
