@@ -98,7 +98,9 @@ def get_celeb_data(celeb_html):
         celeb_html: A list of soups containing individual celebrity data.
 
     Returns:
-        A list of lists containing celebrity information (see above).
+        A dictionary containing data about celebrity's jet usage.
+        keys: celebrity names
+        values: a list of celebrity information (see above)
     """
     data_dict = {}
     for chunk in celeb_html:
@@ -267,13 +269,14 @@ def clean_time(data_list):
     data_list[index] = in_hours
 
 
-def get_celeb_info_wapi(fix_name):
+def get_celeb_info_wapi(data_dict):
     """
     Access data from apininjas for each celebrity and write them into a json file
 
     Args:
-    fix_name: a fixed list of jet owners names
+    data_dict: A dictionary containing data about celebrity's jet usage
     """
+    fix_name = list(data_dict.keys())
     with open("Data/raw_api_data.json", "w") as f:
         for name in fix_name:
             try:
@@ -287,13 +290,14 @@ def get_celeb_info_wapi(fix_name):
                 pass
 
 
-def get_jet_owner_info(fix_name):
+def get_jet_owner_info(data_dict):
     """
     Process and organize celebrity data into a json file
 
     Args:
-    fix_name: a fixed list of jet owners names
+    data_dict: A dictionary containing data about celebrity's jet usage
     """
+    fix_name = list(data_dict.keys())
     with open("Data/jet_owners_info.json", "w") as f:
         for name in fix_name:
             # Get and parse the infobox, if applicable
@@ -318,9 +322,9 @@ def get_jet_owner_info(fix_name):
 
             # Get their net worth
             try:
-                net_worth = scrap.get_net_worth()
+                net_worth = scrap.get_net_worth(name.lower())
             except AttributeError:
-                net_worth = None
+                net_worth = "N/A"
 
             f.write(json.dumps([name, category, age, net_worth]) + "\n")
 
