@@ -1,9 +1,17 @@
+"""
+Functions to get and sort scraped data, specifically from api-ninjas and
+celebrityflighttracker.com
+"""
+
 import json
 import requests  # type: ignore
 from bs4 import BeautifulSoup  # type: ignore
 import wptools
 import celebrity_info_scrap as scrap
 import keys
+
+# pylint: disable=no-member
+# pylint: disable=E1101
 
 
 def get_apininjas_data(celeb_name):
@@ -101,6 +109,8 @@ def get_celeb_data(celeb_html):
         A dictionary containing data about celebrity's jet usage.
         keys: celebrity names
         values: a list of celebrity information (see above)
+        A dictionary string:list pairs containing celebrity information
+        (see above).
     """
     data_dict = {}
     for chunk in celeb_html:
@@ -269,7 +279,38 @@ def clean_time(data_list):
     data_list[index] = in_hours
 
 
-def get_celeb_info_wapi(data_dict):
+def combine_duplicates(celeb_dict):
+    """
+    Merges personalities with multiple jets into one profile with
+    all their flight data
+
+    Args:
+        celeb_dict: dictionary of "string": list of strings containing
+        duplicate celebrities.
+
+    Returns:
+        A dictionary where all of a celebrity's flight data is assigned
+        under their name, not under their jets
+    """
+    pass
+    # combined_dict = {}
+    # for name, data in celeb_dict.items:
+    #     just_name = name
+    #     if name.find("(") != -1:
+    #         index = name.find("(")
+    #         just_name = name[:: (index - 1)]
+
+    #     for c_dict_name, _ in combined_dict.items():
+    #         if just_name.find(c_dict_name) != -1:
+    #             for i in range(len(combined_dict[c_dict_name])):
+    #                 combined_dict[c_dict_name][i] = float(
+    #                     combined_dict[c_dict_name][i]
+    #                 ) + float(data[i + 2])
+
+    #             continue
+
+
+def get_celeb_info_wapi(fix_name):
     """
     Access data from apininjas for each celebrity and write them into a json file
 
