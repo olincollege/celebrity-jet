@@ -326,11 +326,17 @@ def get_celeb_info_wapi(data_dict):
     Args:
     data_dict: A dictionary containing data about celebrity's jet usage
     """
+    # Combine any duplicate entries in the provided data dictionary
     fix_dict = combine_duplicates(data_dict)
     fix_name = list(fix_dict.keys())
+
+    # Open the file to write raw API data to it
     with open("Data/raw_api_info.csv", "w", encoding="utf-8") as f:
         for name in fix_name:
+            # Fetch the API response for each celebrity
             response = get_apininjas_data(name)
+
+            # Write the response to the file, or write an empty string if no data is returned
             if response is not None:
                 f.write(response)
             else:
@@ -345,35 +351,61 @@ def get_jet_owner_info(data_dict):
     Args:
     data_dict: A dictionary containing data about celebrity's jet usage
     """
+    # Combine duplicate entries in the data dictionary
     fix_dict = combine_duplicates(data_dict)
     fix_name = list(fix_dict.keys())
+
+    # Open the file to write celebrity information in JSON format
     with open("Data/jet_owners_info.json", "w") as f:
         for name in fix_name:
-            # Get and parse the infobox, if applicable
+            # Get and parse the celebrity's Wikipedia infobox (if available)
             try:
                 content = wptools.page(name).get_parse()
                 infobox = content.data["infobox"]
             except LookupError:
                 continue
 
-            # Get their occupations and categorize them
+            # Get the celebrity's occupations and categorize them
             try:
                 occupations = scrap.get_occupations(infobox)
             except AttributeError:
                 occupations = None
             category = scrap.decide_occupation(name, occupations)
 
-            # Get their age
+            # Get the celebrity's age
             try:
                 age = scrap.get_age(infobox)
             except AttributeError:
                 age = None
 
-            # Get their net worth
+            # Get the celebrity's net worth from the data dictionary
             net_worth_dict = scrap.get_net_worth()
             if name.lower() in net_worth_dict:
                 net_worth = net_worth_dict[name.lower()]
             else:
                 net_worth = "N/A"
 
+            # Write the celebrity's information in JSON format to the file
             f.write(json.dumps([name, category, age, net_worth]) + "\n")
+
+
+def create_dict(json_file_path):
+    """
+    Converts jet owner info from json to a dictionary
+
+    Args:
+    json_file_path: the file path of the json doc that stores original info
+
+    Returns:
+    A dictionary with each celebrity's name as keys and their information as values
+    """
+    # Create an empty dictionary to store the celebrity information
+    info_dict = {}
+
+    # Open the JSON file and process each line
+    with open(json_file_path, "r") as f:
+        for line in f:
+            data = json.loads(line.strip())
+            info_dict[data[0]] = [data[1], data[2], data[3]]
+
+    return info_dict
