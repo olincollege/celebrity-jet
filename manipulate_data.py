@@ -26,13 +26,8 @@ def get_apininjas_data(celeb_name):
         Dictionary of information of a given celebrity.
     """
     api_key = keys.get_ninja_key()
-    api_url = "https://api.api-ninjas.com/v1/celebrity?name={}".format(
-        celeb_name
-    )
-    response = requests.get(
-        api_url,
-        headers={"X-Api-Key": api_key},
-    )
+    api_url = f"https://api.api-ninjas.com/v1/celebrity?name={celeb_name}"
+    response = requests.get(api_url, headers={"X-Api-Key": api_key}, timeout=10)
     if response.status_code == requests.codes.ok:
         return response
     else:
@@ -66,7 +61,7 @@ def get_flighttracking(
         "Referer": "https://google.com",
         "Connection": "keep-alive",
     }
-    html = requests.get(url, headers=headers)
+    html = requests.get(url, headers=headers, timeout=10)
     soup = BeautifulSoup(html.text, "html.parser")
     formatted_soup = soup.prettify()
     for script in soup(["script", "style"]):
@@ -117,9 +112,9 @@ def get_celeb_data(celeb_html):
         # get the name from chunk
         clean_name = get_individual_name(chunk)
         # get associated data from chunk
-        clean_data = get_individual_data(chunk)
+        cleaned_data = get_individual_data(chunk)
         # combine name and data into a dictionary
-        data_dict[clean_name] = clean_data
+        data_dict[clean_name] = cleaned_data
     return data_dict
 
 
@@ -151,7 +146,8 @@ def fix_names(name):
     Remove duplicate names and correct spelling mistakes
 
     Args:
-    name: a dictionary whose keys are jet owners' names with repetitions and mistakes
+    name: a dictionary whose keys are jet owners' names with repetitions
+    and mistakes.
 
     Returns:
     A cleaned list of names ready for wikipedia search
@@ -196,6 +192,12 @@ def get_individual_data(celeb_chunk):
 
 
 def clean_all_data(data_dict):
+    """
+    Iterates through passed dictionary and cleans the data within
+
+    Args:
+        data_dict: A dictionary with string keys and a list of strings
+        as the items"""
     for key in data_dict:
         clean_data(data_dict[key])
 
@@ -254,12 +256,12 @@ def clean_time(data_list):
         if (in_words is True and char.isdigit()) or (
             i == (len(dirty_time) - 1)
         ):
-            slice = dirty_time[start_index:i]
-            if slice.find("day") != -1:
+            tslice = dirty_time[start_index:i]
+            if tslice.find("day") != -1:
                 days = dirty_time[start_index:number_end_index]
-            if slice.find("hour") != -1:
+            if tslice.find("hour") != -1:
                 hours = dirty_time[start_index:number_end_index]
-            if slice.find("minute") != -1:
+            if tslice.find("minute") != -1:
                 minutes = dirty_time[start_index:number_end_index]
             start_index = i
             in_words = False
@@ -310,7 +312,7 @@ def combine_duplicates(celeb_dict):
                     combined_dict[c_dict_name][i] = float(
                         combined_dict[c_dict_name][i]
                     ) + float(data[i + 2])
-        if match == False:
+        if match is False:
             combined_dict[just_name] = data[2::]
 
     return combined_dict
@@ -318,7 +320,8 @@ def combine_duplicates(celeb_dict):
 
 def get_celeb_info_wapi(data_dict):
     """
-    Access data from apininjas for each celebrity and write them into a json file
+    Access data from apininjas for each celebrity and write them into a
+    json file.
 
     Args:
     data_dict: A dictionary containing data about celebrity's jet usage
