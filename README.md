@@ -41,7 +41,7 @@ project. You need to create an account to create your own API key. If you do not
 already have an account you can create it [here](https://www.api-ninjas.com/register).
 
 NOTE: The api key from api-ninjas has a max calls of 10000 per month. This essay uses
-~70 every time it runs so consider changing 
+~70 every time it runs so try not to run it too many times.
 ```
 GATHER_API_DATA = False
 ```
