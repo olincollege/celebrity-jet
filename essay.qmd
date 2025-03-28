@@ -6,11 +6,11 @@ jupyter: python3
 
 ### Julian Shah, Yunzhu Chen
 
-
-
 ## Introduction
-(In the introduction, you should aim to tell the reader what your project
-is about. In doing so, you should answer the following questions:
+
+(In the introduction, you should aim to tell the reader what your
+project is about. In doing so, you should answer the following
+questions:
 
 What is the question you are trying to answer or the story that you are
 trying you tell? Why is this question or story important? What were the
@@ -20,62 +20,64 @@ this section however you wish.)
 
 ### Research Question and Background
 
-
 ### Overview of the Project
-
 
 ### Setup Instructions
 
 
-## Methodology 
-(In the methodology, you should explain how you obtained,
-processed, and summarized or visualized the data. In doing so, you
-should answer the following questions:
+
+```{python}
+#| vscode: {languageId: plaintext}
+%load_ext autoreload
+%autoreload 2
+```
+
+## Methodology
+
+This project is structured around data retrieved from 
+[celebrityprivatejettracker.com](https://celebrityprivatejettracker.com/leadeerboard)
+
+
+(In the methodology, you should explain how you obtained, processed, and
+summarized or visualized the data. In doing so, you should answer the
+following questions:
 
 Where did you get your data from? How did you get this data (i.e., did
 you programmatically download it or did you access it through an API)?
 How did you store and/or process this data (e.g., did you store and
 process it in Pandas)? What information did you get from this data that
-you used in the presentation of your results?) 
+you used in the presentation of your results?)
 
 ### Data Collection and Processing
+
 Here is all the data we got and used in this project.
 
-__1) Celebrity Jet Usage__
-**Source:** Celebrity Jet Tracker Website (https://celebrityprivatejettracker.com/)
-**Method:** Scrap/html ...?
-**Process & Storage:**
+**1) Celebrity Jet Usage** **Source:** Celebrity Jet Tracker Website
+(https://celebrityprivatejettracker.com/) **Method:** Scrap/html …?
+**Process & Storage:** **Usage:**
+
+**2) Celebrity Age and Occupation** **Source:** Wikipedia **Method:** We
+got it directly from the Wikipedia website with several libraries,
+including requests, wptools and mwparserfromhell. **Process & Storage:**
 **Usage:**
 
-__2) Celebrity Age and Occupation__
-**Source:** Wikipedia
-**Method:** We got it directly from the Wikipedia website with several libraries, including requests, wptools and mwparserfromhell.
-**Process & Storage:**
-**Usage:**
+**3) Celebrity Net Worth** **Source:** API Ninjas website **Method:**
+**Process & Storage:** **Usage:**
 
-__3) Celebrity Net Worth__
-**Source:** API Ninjas website
-**Method:** 
-**Process & Storage:**
-**Usage:**
-
-__4) Oscar & Grammy Nominees__
-**Source:** Wikipedia
-**Method:** We got it directly from the Wikipedia website with several libraries, including requests, wptools and mwparserfromhell.
-**Process & Storage:**
+**4) Oscar & Grammy Nominees** **Source:** Wikipedia **Method:** We got
+it directly from the Wikipedia website with several libraries, including
+requests, wptools and mwparserfromhell. **Process & Storage:**
 **Usage:**
 
 ### Data Analysis and Visualization
 
 How do we relate the data and use them
 
+## Results
 
-
-## Results 
-(In the results,
-you should show the main summaries or visualizations of your data, along
-with any accompanying information. In doing so, you should answer the
-following questions:
+(In the results, you should show the main summaries or visualizations of
+your data, along with any accompanying information. In doing so, you
+should answer the following questions:
 
 What summaries or visualizations did you create? What are the
 interesting and/or important parts of these summaries or visualizations?
@@ -83,24 +85,22 @@ How do these results answer your questions or tell your story?)
 
 ### Visualizations
 
-- Pie chart of jet miles each owner
-- ??(some kind of graph) of carbon emissions rank of people who own more than one jet
-- Histogram of carbon emiisions by age
-- Histogram of carbon emissions by net worth
+-   Pie chart of jet miles each owner
+-   ??(some kind of graph) of carbon emissions rank of people who own
+    more than one jet
+-   Histogram of carbon emiisions by age
+-   Histogram of carbon emissions by net worth
 
-potentially:
-- Pie chart of carbon emiisions by occupation
-- Carbon emission among musicians (grammy nominees vs others)
-- Carbon emission among actors (oscar nominees vs others)
+potentially: - Pie chart of carbon emiisions by occupation - Carbon
+emission among musicians (grammy nominees vs others) - Carbon emission
+among actors (oscar nominees vs others)
 
 ### Summaries and Interpretation
 
+## Conclusion
 
-
-## Conclusion 
-(In the conclusion, you should provide key takeaways for
-the reader. In doing so, you should answer the following questions,
-where applicable:
+(In the conclusion, you should provide key takeaways for the reader. In
+doing so, you should answer the following questions, where applicable:
 
 What are the important insights that the reader should get from this
 project? What are the ethical considerations surrounding the data
@@ -111,12 +111,9 @@ what ways would you extend or change your project if you had more time?)
 
 ### Key Takeaways
 
-
 ### Ethical Considerations
 
-
 ### Challenges and Restrictions
-
 
 ### Future Work
 
