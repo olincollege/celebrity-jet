@@ -8,6 +8,15 @@ and carbon impact on the planet.
 Please use git to clone this repository to your local machine. If you don't know how
 guide can be found [here](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
 
+## Render Quarto to .ipynb
+
+Please make sure quarto is installed and run
+```
+quarto convert essay.qmd
+```
+in this folder's directory to get the essay.
+
+[HERE is a gude if you need it](https://quarto.org/docs/tools/jupyter-lab.html)
 ## Requirements
 
 This project runs in Python 3.1x. Please ensure that you have an appropriate 
