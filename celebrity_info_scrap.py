@@ -119,11 +119,21 @@ def get_net_worth():
     Get a celebrity's net worth from API ninja
 
     Returns:
-    A string representing their net worth
+    raw_api_info: A list of dictionaries with celebrity info, including net worth
     """
-    with open("Data/raw_api_data.json", "r") as f:
+    net_worth_dict = {}
+    with open("Data/raw_api_info.csv", "r") as f:
         for line in f:
-            if not line:
-                continue
-            data = json.loads(line.strip())
-            return data[0]["net_worth"]
+            if line != '[]':
+                name_start = line.find('"name": "') + len('"name": "')
+                name_end = line.find('"', name_start)
+                name = line[name_start:name_end]
+
+                net_worth_start = line.find('"net_worth": ') + len(
+                    '"net_worth": '
+                )
+                net_worth_end = line.find(",", net_worth_start)
+                net_worth = line[net_worth_start:net_worth_end]
+
+                net_worth_dict[name] = net_worth
+    return net_worth_dict

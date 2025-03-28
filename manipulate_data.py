@@ -29,9 +29,9 @@ def get_apininjas_data(celeb_name):
     api_url = f"https://api.api-ninjas.com/v1/celebrity?name={celeb_name}"
     response = requests.get(api_url, headers={"X-Api-Key": api_key}, timeout=10)
     if response.status_code == requests.codes.ok:
-        return response
+        return response.text
     else:
-        print("Error:", response.status_code, response.text)
+        return None
 
 
 def get_flighttracking(
@@ -326,18 +326,16 @@ def get_celeb_info_wapi(data_dict):
     Args:
     data_dict: A dictionary containing data about celebrity's jet usage
     """
-    fix_name = list(data_dict.keys())
-    with open("Data/raw_api_data.json", "w") as f:
+    fix_dict = combine_duplicates(data_dict)
+    fix_name = list(fix_dict.keys())
+    with open("Data/raw_api_info.csv", "w", encoding="utf-8") as f:
         for name in fix_name:
-            try:
-                response = get_apininjas_data(name)
-                if not response:
-                    json.dump([], f)
-                else:
-                    json.dump(response, f)
-                f.write("\n")
-            except Exception:
-                pass
+            response = get_apininjas_data(name)
+            if response is not None:
+                f.write(response)
+            else:
+                f.write("")
+            f.write("\n")
 
 
 def get_jet_owner_info(data_dict):
@@ -347,7 +345,8 @@ def get_jet_owner_info(data_dict):
     Args:
     data_dict: A dictionary containing data about celebrity's jet usage
     """
-    fix_name = list(data_dict.keys())
+    fix_dict = combine_duplicates(data_dict)
+    fix_name = list(fix_dict.keys())
     with open("Data/jet_owners_info.json", "w") as f:
         for name in fix_name:
             # Get and parse the infobox, if applicable
@@ -371,27 +370,10 @@ def get_jet_owner_info(data_dict):
                 age = None
 
             # Get their net worth
-            try:
-                net_worth = scrap.get_net_worth(name.lower())
-            except AttributeError:
+            net_worth_dict = scrap.get_net_worth()
+            if name.lower() in net_worth_dict:
+                net_worth = net_worth_dict[name.lower()]
+            else:
                 net_worth = "N/A"
 
             f.write(json.dumps([name, category, age, net_worth]) + "\n")
-
-
-def create_dict(json_file_path):
-    """
-    Converts jet owner info from json to a dictionary
-
-    Args:
-    json_file_path: the file path of the json doc that stores original info
-
-    Returns:
-    A dictionary with each celebrity's name as keys and their information as values
-    """
-    info_dict = {}
-    with open(json_file_path, "r") as f:
-        for line in f:
-            data = json.loads(line.strip())
-            info_dict[data[0]] = [data[1], data[2], data[3]]
-    return info_dict
