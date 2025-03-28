@@ -3,6 +3,11 @@
 A python analyzer that looks for correlations between celebrity jet usage, influence
 and carbon impact on the planet. 
 
+## Clone to local machine
+
+Please use git to clone this repository to your local machine. If you don't know how
+guide can be found [here](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
+
 ## Requirements
 
 This project runs in Python 3.1x. Please ensure that you have an appropriate 

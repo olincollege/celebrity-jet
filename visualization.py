@@ -29,7 +29,7 @@ jet_miles = [info[2] for info in jet_info.values()]
 # Pie chart of private jet miles by owner
 def plot_jet_miles_distribution(names, jet_miles):
     """Generates a pie chart showing the proportion of private jet miles for each owner."""
-    plt.figure(figsize=(8, 8))
+    plt.figure(figsize=(8, 9))
     plt.pie(jet_miles, labels=names, autopct="%1.1f%%")
     plt.axis("equal")
     plt.title("Proportion of Private Jet Miles for Each Owner")
@@ -39,7 +39,9 @@ def plot_jet_miles_distribution(names, jet_miles):
 # Pie chart of carbon emissions by occupation
 def plot_emissions_by_occupation():
     """Generates a pie chart displaying the proportion of total carbon emissions by occupation category."""
-    occupations, emissions = prep.get_all_occupation_emissions(celeb_info, jet_info)
+    occupations, emissions = prep.get_all_occupation_emissions(
+        celeb_info, jet_info
+    )
     plt.figure(figsize=(10, 6))
     plt.bar(occupations, emissions, color="skyblue")
     plt.title("Average CO2 Emissions by Occupation")
@@ -48,11 +50,11 @@ def plot_emissions_by_occupation():
 
     plt.show()
 
-    
+
 # Histogram of carbon emissions by age group
 def plot_emissions_by_age():
     """Plots a histogram showing the distribution of carbon emissions across different age groups."""
-    
+
     age_group_list, emissions = prep.get_all_age_emissions(celeb_info, jet_info)
     plt.figure(figsize=(10, 6))
     plt.bar(age_group_list, emissions, color="orchid")
